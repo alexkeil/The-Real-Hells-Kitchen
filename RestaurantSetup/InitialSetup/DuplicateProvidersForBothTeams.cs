@@ -59,13 +59,28 @@ namespace TestMod.RestaurantSetup.InitialSetup
             foreach (var table in tables)
             {
                 if (!Require(table, out CPosition tablePos)) continue;
+                if (!Require(table, out CAppliance appliance)) continue;
 
-                if (Mathf.Abs(tablePos.Position.x) < 0.5f)
-                    Mod.Logger.LogInfo($"[DEBUGGING] Table {table.Index} close to center (x={tablePos.Position.x})");
+                var offsetPos = tablePos;
+                offsetPos.Position = new Vector3(tablePos.Position.x + 2f, tablePos.Position.y, tablePos.Position.z);
 
-                int team = tablePos.Position.x < 0 ? 0 : 1;
-                EntityManager.AddComponentData(table, new CTeamAssignment { Team = team });
-                Mod.Logger.LogInfo($"[DEBUGGING] Tagged table {table.Index} as Team {team}");
+                if (MapBoundsInfo.HasBounds)
+                {
+                    if (offsetPos.Position.x < MapBoundsInfo.MinX || offsetPos.Position.x > MapBoundsInfo.MaxX)
+                    {
+                        Mod.Logger.LogInfo($"[DEBUGGING] Skipped duplicate for table {table.Index} — outside map bounds");
+                        continue;
+                    }
+                }
+
+                Entity copy = EntityManager.CreateEntity();
+                EntityManager.AddComponentData(copy, new CCreateAppliance { ID = appliance.ID });
+                EntityManager.AddComponentData(copy, offsetPos);
+                EntityManager.AddComponentData(copy, new CTeamAssignment { Team = 1 });
+
+                EntityManager.AddComponentData(table, new CTeamAssignment { Team = 0 });
+
+                Mod.Logger.LogInfo($"[DEBUGGING] Duplicated table {table.Index} to Team 1 at {offsetPos.Position}");
             }
 
             tables.Dispose();

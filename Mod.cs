@@ -1,4 +1,3 @@
-using HarmonyLib;
 using KitchenLib;
 using KitchenLib.Interfaces;
 using KitchenMods;
@@ -23,13 +22,9 @@ namespace TestMod
         public const string MOD_AUTHOR = "PineMoose";
         public const string MOD_GAMEVERSION = ">=1.3.0";
 
-        private static bool _harmonyPatched = false;
-
         /*
-         * Bundle: This is the asset bundle that contains all of your mod's assets.
          * Logger: This is the logger that you will use to log information to the console.
          */
-        internal static AssetBundle Bundle;
         internal static KitchenLogger Logger;
 
         /*
@@ -58,23 +53,9 @@ namespace TestMod
          */
         protected override void OnPostActivate(KitchenMods.Mod mod)
         {
-            //  Bundle = mod.GetPacks<AssetBundleModPack>()
-            //      .SelectMany(e => e.AssetBundles)
-            //      .FirstOrDefault() ?? throw new MissingAssetBundleException(MOD_GUID);
-
             Logger = InitLogger();
             Mod.Logger.LogInfo("TestMod loaded successfully!");
-            if (!_harmonyPatched)
-            {
-                var harmony = new Harmony(MOD_GUID);
-                harmony.PatchAll();
-                _harmonyPatched = true;
-
-                foreach (var method in harmony.GetPatchedMethods())
-                {
-                    Mod.Logger.LogInfo($"[DEBUGGING] Patched method: {method.DeclaringType}.{method.Name}");
-                }
-            }
+           
         }
     }
 }

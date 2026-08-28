@@ -38,6 +38,8 @@ namespace TestMod.Team
             var appliances = applianceQuery.ToEntityArray(Allocator.Temp);
             foreach (var appliance in appliances)
             {
+                if (Has<CApplianceBlueprint>(appliance)) continue;
+                if (Has<CAppliance>(appliance)) continue;
                 if (!Require(appliance, out CPosition pos)) continue;
                 if (!Require(appliance, out CTeamAssignment team)) continue;
                 newLabels.Add((pos.Position + new Vector3(0f, 1.2f, 0f), $"[Team {team.Team}]", team.Team));
