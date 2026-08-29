@@ -6,11 +6,12 @@ using UnityEngine;
 
 namespace TestMod.Debugging
 {
+    
     public class DebugShowLookTarget : GenericSystemBase, IModSystem
     {
         protected override void OnUpdate()
         {
-            if (!Input.GetKeyDown(KeyCode.F6)) return;
+            if (!Input.GetKeyDown(KeyCode.F9)) return;
 
             var playerQuery = GetEntityQuery(typeof(CPlayer), typeof(CAttemptingInteraction), typeof(CPosition));
             var players = playerQuery.ToEntityArray(Allocator.Temp);
@@ -52,4 +53,5 @@ namespace TestMod.Debugging
             players.Dispose();
         }
     }
+    
 }

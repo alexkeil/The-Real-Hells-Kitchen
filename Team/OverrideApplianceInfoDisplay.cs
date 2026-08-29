@@ -5,7 +5,7 @@ using TMPro;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.Team.TeamChecks
+namespace TestMod.Team
 {
     public class OverrideApplianceInfoDisplay : GenericSystemBase, IModSystem
     {
@@ -36,18 +36,19 @@ namespace TestMod.Team.TeamChecks
                     float dist = Vector3.Distance(view.transform.position, pos.Position);
                     if (dist < closestDist) { closestDist = dist; matchedView = view; }
                 }
-
                 if (matchedView == null) continue;
 
                 var type = matchedView.GetType();
+
                 var priceField = type.GetField("Price", BindingFlags.Instance | BindingFlags.NonPublic);
                 var titleField = type.GetField("Title", BindingFlags.Instance | BindingFlags.NonPublic);
-
                 var affordableField = type.GetField("Affordable", BindingFlags.Instance | BindingFlags.NonPublic);
                 var unaffordableField = type.GetField("Unaffordable", BindingFlags.Instance | BindingFlags.NonPublic);
+                var priceTagField = type.GetField("PriceTag", BindingFlags.Instance | BindingFlags.NonPublic);
 
                 var priceText = priceField?.GetValue(matchedView) as TextMeshPro;
                 var titleText = titleField?.GetValue(matchedView) as TextMeshPro;
+                var priceTagGO = priceTagField?.GetValue(matchedView) as GameObject;
 
                 var affordableColor = (Color)(affordableField?.GetValue(matchedView) ?? Color.white);
                 var unaffordableColor = (Color)(unaffordableField?.GetValue(matchedView) ?? Color.red);
@@ -57,6 +58,19 @@ namespace TestMod.Team.TeamChecks
 
                 if (titleText != null)
                     titleText.color = team.Team == 1 ? new Color(0.3f, 0.6f, 1f) : new Color(1f, 0.4f, 0.4f);
+
+                if (priceTagGO != null)
+                {
+                    var unitTransform = priceTagGO.transform.Find("Unit");
+                    if (unitTransform != null)
+                    {
+                        var unitText = unitTransform.GetComponent<TextMeshPro>();
+                        if (unitText != null)
+                        {
+                            unitText.color = resultColor;
+                        }
+                    }
+                }
             }
             entities.Dispose();
         }

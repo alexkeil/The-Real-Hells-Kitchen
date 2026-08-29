@@ -2,7 +2,6 @@
 using KitchenMods;
 using ONe.KitchenDesigner.KitchenDesigns;
 using ONe.KitchenDesigner.KitchenDesigns.Decoders;
-using UnityEngine;
 
 namespace TestMod.RestaurantSetup.InitialSetup
 {

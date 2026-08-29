@@ -4,7 +4,7 @@ using System.Reflection;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.Team.TeamChecks
+namespace TestMod.Team
 {
     public class ApplianceColorOverlay : GenericSystemBase, IModSystem
     {
@@ -51,23 +51,23 @@ namespace TestMod.Team.TeamChecks
                     if (mat.HasProperty("_OverlayColour"))
                         mat.SetColor("_OverlayColour", tint);
 
-                    if (mat.HasProperty("_HasTextureOverlay")) 
+                    if (mat.HasProperty("_HasTextureOverlay"))
                         mat.SetFloat("_HasTextureOverlay", 1f);
 
-                    if (mat.HasProperty("_Color0")) 
+                    if (mat.HasProperty("_Color0"))
                         mat.SetColor("_Color0", tint);
 
-                    if (mat.HasProperty("_Colour2")) 
+                    if (mat.HasProperty("_Colour2"))
                         mat.SetColor("_Colour2", tint);
 
-                    if (mat.HasProperty("_Color2")) 
+                    if (mat.HasProperty("_Color2"))
                         mat.SetColor("_Color2", tint);
 
-                    if (mat.HasProperty("_Highlight")) 
+                    if (mat.HasProperty("_Highlight"))
                         mat.SetFloat("_Highlight", 0.3f);
 
                     if (mat.shader.name == "Simple Transparent")
-                        if (mat.HasProperty("_Color")) 
+                        if (mat.HasProperty("_Color"))
                             mat.SetColor("_Color", tint);
                 }
             }

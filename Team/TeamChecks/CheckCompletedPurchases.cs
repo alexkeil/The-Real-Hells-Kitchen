@@ -1,9 +1,7 @@
 ﻿using Kitchen;
 using KitchenMods;
 using System.Collections.Generic;
-using TestMod.Team;
 using Unity.Entities;
-using UnityEngine;
 
 namespace TestMod.Team.TeamChecks
 {

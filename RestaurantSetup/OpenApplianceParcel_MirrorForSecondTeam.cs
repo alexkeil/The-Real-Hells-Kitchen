@@ -3,7 +3,7 @@ using Kitchen;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.RestaurantSetup
+namespace TestMod.RestaurantSetup.InitialSetup
 {
     [HarmonyPatch(typeof(OpenApplianceParcel), "Perform")]
     public static class OpenApplianceParcel_MirrorForSecondTeam

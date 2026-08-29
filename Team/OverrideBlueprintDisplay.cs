@@ -5,7 +5,7 @@ using TMPro;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.Team.TeamChecks
+namespace TestMod.Team
 {
     public class OverrideBlueprintDisplay : GenericSystemBase, IModSystem
     {
@@ -60,5 +60,5 @@ namespace TestMod.Team.TeamChecks
             entities.Dispose();
         }
     }
-    
+
 }

@@ -3,7 +3,7 @@ using KitchenMods;
 using TestMod.Team;
 using UnityEngine;
 
-namespace TestMod.RestaurantSetup
+namespace TestMod.Team
 {
     public class CreateTeamMoneyDisplays : GenericSystemBase, IModSystem
     {

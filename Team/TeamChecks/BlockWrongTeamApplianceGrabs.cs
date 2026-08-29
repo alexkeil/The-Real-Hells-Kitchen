@@ -2,7 +2,6 @@
 using Kitchen;
 using KitchenData;
 using Unity.Entities;
-using UnityEngine;
 
 namespace TestMod.Team.TeamChecks
 {

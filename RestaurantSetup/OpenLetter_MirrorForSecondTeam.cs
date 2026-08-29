@@ -4,7 +4,7 @@ using System;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.RestaurantSetup
+namespace TestMod.RestaurantSetup.InitialSetup
 {
     [HarmonyPatch(typeof(OpenLetter), "Perform")]
     public static class OpenLetter_MirrorForSecondTeam

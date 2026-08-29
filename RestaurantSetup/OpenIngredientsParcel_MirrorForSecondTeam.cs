@@ -4,7 +4,7 @@ using KitchenData;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.RestaurantSetup
+namespace TestMod.RestaurantSetup.InitialSetup
 {
 
     [HarmonyPatch(typeof(OpenIngredientParcel), "Perform")]

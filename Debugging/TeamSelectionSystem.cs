@@ -4,12 +4,13 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.Team
+namespace TestMod.Debugging
 {
     public class TeamSelectionSystem : GenericSystemBase, IModSystem
     {
         protected override void OnUpdate()
         {
+
 
             if (!Input.GetKeyDown(KeyCode.E)) return;
 
