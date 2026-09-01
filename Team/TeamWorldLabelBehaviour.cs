@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-namespace TestMod.Team
+namespace PlateVsPlate.Team
 {
     public class TeamWorldLabelBehaviour : MonoBehaviour
     {

@@ -1,9 +1,9 @@
 ﻿using Kitchen;
 using KitchenMods;
-using TestMod.Team;
+using PlateVsPlate.Team;
 using UnityEngine;
 
-namespace TestMod.RestaurantSetup
+namespace PlateVsPlate.Debugging
 {
     public class DebugAdjustTeamMoney : GenericSystemBase, IModSystem
     {
@@ -13,23 +13,23 @@ namespace TestMod.RestaurantSetup
         {
             if (Input.GetKeyDown(KeyCode.PageUp))
             {
-                TeamMoney.Get(0).Balance += Amount;
-                Mod.Logger.LogInfo($"[DEBUGGING] Team 0 balance +{Amount} -> {TeamMoney.Get(0).Balance}");
+                TeamData.Get(0).Balance += Amount;
+                Mod.Logger.LogInfo($"[DEBUGGING] Team 0 balance +{Amount} -> {TeamData.Get(0).Balance}");
             }
             if (Input.GetKeyDown(KeyCode.PageDown))
             {
-                TeamMoney.Get(0).Balance -= Amount;
-                Mod.Logger.LogInfo($"[DEBUGGING] Team 0 balance -{Amount} -> {TeamMoney.Get(0).Balance}");
+                TeamData.Get(0).Balance -= Amount;
+                Mod.Logger.LogInfo($"[DEBUGGING] Team 0 balance -{Amount} -> {TeamData.Get(0).Balance}");
             }
             if (Input.GetKeyDown(KeyCode.Insert))
             {
-                TeamMoney.Get(1).Balance += Amount;
-                Mod.Logger.LogInfo($"[DEBUGGING] Team 1 balance +{Amount} -> {TeamMoney.Get(1).Balance}");
+                TeamData.Get(1).Balance += Amount;
+                Mod.Logger.LogInfo($"[DEBUGGING] Team 1 balance +{Amount} -> {TeamData.Get(1).Balance}");
             }
             if (Input.GetKeyDown(KeyCode.Delete))
             {
-                TeamMoney.Get(1).Balance -= Amount;
-                Mod.Logger.LogInfo($"[DEBUGGING] Team 1 balance -{Amount} -> {TeamMoney.Get(1).Balance}");
+                TeamData.Get(1).Balance -= Amount;
+                Mod.Logger.LogInfo($"[DEBUGGING] Team 1 balance -{Amount} -> {TeamData.Get(1).Balance}");
             }
         }
     }

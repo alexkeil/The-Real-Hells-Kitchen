@@ -3,7 +3,7 @@ using Kitchen;
 using KitchenData;
 using Unity.Entities;
 
-namespace TestMod.Team.TeamChecks
+namespace PlateVsPlate.Team.TeamChecks
 {
     [HarmonyPatch(typeof(PickUpAndDropAppliance), "PerformPickUp")]
     public static class BlockWrongTeamPickUp
@@ -15,15 +15,10 @@ namespace TestMod.Team.TeamChecks
             var em = World.DefaultGameObjectInjectionWorld.EntityManager;
             var target = interact.Target;
 
-            if (!em.HasComponent<CTeamAssignment>(target))
-            {
-                Mod.Logger.LogInfo($"[DEBUGGING] Target entity {target.Index} has NO CTeamAssignment — letting through");
-                return true;
-            }
+            if (!em.HasComponent<CTeamAssignment>(target)) return true;
 
             if (!em.HasComponent<CTeamAssignment>(player))
             {
-                Mod.Logger.LogInfo($"[DEBUGGING] Blocked pickup — player has no team");
                 __result = false;
                 return false;
             }
@@ -33,7 +28,6 @@ namespace TestMod.Team.TeamChecks
 
             if (playerTeam.Team != targetTeam.Team)
             {
-                Mod.Logger.LogInfo($"[DEBUGGING] Blocked pickup — team mismatch (player: {playerTeam.Team}, item: {targetTeam.Team})");
                 __result = false;
                 return false;
             }
@@ -65,7 +59,6 @@ namespace TestMod.Team.TeamChecks
 
             if (playerTeam.Team != itemTeam.Team)
             {
-                Mod.Logger.LogInfo($"[DEBUGGING] Blocked drop — team mismatch");
                 __result = false;
                 return false;
             }

@@ -1,11 +1,10 @@
 ﻿using HarmonyLib;
 using Kitchen;
-using TestMod;
-using TestMod.Team.TeamChecks;
 using Unity.Entities;
 
-namespace TestMod.Team.TeamChecks
+namespace PlateVsPlate.Team.TeamChecks
 {
+    // note.. ideally try to fix this somehow.. you get a visual glitch when you try to buy it.. can't buy but still
     [HarmonyPatch(typeof(PurchaseAfterDuration), "OnUpdate")]
     public static class InterceptDurationPurchaseMoney
     {
@@ -20,6 +19,7 @@ namespace TestMod.Team.TeamChecks
                 ComponentType.ReadOnly<CPurchaseAfterDuration>(),
                 ComponentType.ReadOnly<CBeingActedOnBy>()
             );
+
             var entities = query.ToEntityArray(Unity.Collections.Allocator.Temp);
             foreach (var e in entities)
             {

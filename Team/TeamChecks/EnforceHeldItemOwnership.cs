@@ -4,7 +4,7 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.Team.TeamChecks
+namespace PlateVsPlate.Team.TeamChecks
 {
     public class EnforceHeldItemOwnership : GenericSystemBase, IModSystem
     {
@@ -22,12 +22,8 @@ namespace TestMod.Team.TeamChecks
 
                 if (!holderHasTeam || itemTeam.Team != holderTeam.Team)
                 {
-                    if (!Require(heldBy.Holder, out CPosition holderPos))
-                    {
-                        Mod.Logger.LogInfo($"[DEBUGGING] Could not get holder position for force-drop");
-                        continue;
-                    }
-
+                    if (!Require(heldBy.Holder, out CPosition holderPos)) continue;
+                    
                     holderPos.Rotation = Quaternion.identity;
 
                     EntityManager.RemoveComponent<CHeldAppliance>(item);

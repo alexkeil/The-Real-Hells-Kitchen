@@ -1,11 +1,9 @@
 ﻿using HarmonyLib;
 using Kitchen;
-using TestMod;
-using TestMod.Team;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.Team.TeamChecks
+namespace PlateVsPlate.Team.TeamChecks
 {
     [HarmonyPatch(typeof(CreateEndOfDayPopup), "OnUpdate")]
     public static class InterceptPlayerBonus
@@ -40,23 +38,22 @@ namespace TestMod.Team.TeamChecks
             float num2 = DifficultyHelpers.MoneyRewardPlayerModifier(playerCount);
             int playerBonus = Mathf.CeilToInt((float)num * (num2 - 1f));
 
-            if (playerBonus == 0 || TeamMoney.Teams.Count == 0)
+            if (playerBonus == 0 || TeamData.Teams.Count == 0)
             {
                 _processedDay = day;
                 return;
             }
 
-            // Split evenly across however many teams currently exist, remainder to the last team
-            int teamCount = TeamMoney.Teams.Count;
+            // Split evenly across teams 
+            int teamCount = TeamData.Teams.Count;
             int share = playerBonus / teamCount;
             int remainder = playerBonus - (share * teamCount);
 
             int index = 0;
-            foreach (var teamData in TeamMoney.Teams.Values)
+            foreach (var teamData in TeamData.Teams.Values)
             {
                 int amount = share + (index == teamCount - 1 ? remainder : 0);
-                teamData.Balance += amount;
-                Mod.Logger.LogInfo($"[TestMod] Player bonus: Team {teamData.Team} +${amount}");
+                teamData.EarnMoney(amount);
                 index++;
             }
 
@@ -66,7 +63,7 @@ namespace TestMod.Team.TeamChecks
         public static void Reset()
         {
             _processedDay = -1;
-            TeamMoney.ClearAll();
+            TeamData.ClearAll();
         }
     }
 }

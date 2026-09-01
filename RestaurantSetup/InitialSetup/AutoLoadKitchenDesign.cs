@@ -11,15 +11,17 @@ namespace TestMod.RestaurantSetup.InitialSetup
         public static float MinX, MaxX, MinY, MaxY;
     }
 
+    
     public class AutoLoadKitchenDesign : GenericSystemBase, IModSystem
     {
+        
         private bool _hasLoaded = false;
 
         protected override void OnUpdate()
         {
             if (_hasLoaded) return;
             if (!Has<CSeededRunInfo>()) return;
-
+           
             string savedLayout = "2NTU3OTQzMTU1OjIwMDI4NzYyOTU6MiwyOzEsMzoxOCwxMzoyLjUsMS44LDIuNSwxLjgsMi41LDEuOCwyLjUsMS44LDIuNSwxLjgsMi41LDEuOCwyLjUsMS44LDIuNSwxLjgsMi41LDEuOCwyLjUsMS44LDIuNSwxLjgsMi41LDEuOCwyLjUsMS44LDIuNSwxLjgsMi41LDEuOCwyLjUsMS44LDIuNSwxLjgsMi41LDEuODowLDQsMCw1LDE7MSw0LDEsNSwyOzIsNCwyLDUsMjszLDQsMyw1LDI7NCw0LDQsNSwyOzUsNCw1LDUsMjs2LDQsNiw1LDI7Nyw0LDcsNSwyOzgsLTEsOCwwLDM7OCw0LDgsNSwyOzksNCw5LDUsMjsxMCw0LDEwLDUsMjsxMSw0LDExLDUsMjsxMiw0LDEyLDUsMjo=";
             var design = V2Decoder.Load(savedLayout);
 
@@ -52,7 +54,9 @@ namespace TestMod.RestaurantSetup.InitialSetup
             KitchenDesignLoader.LoadKitchenDesign(design, null);
             _hasLoaded = true;
 
-            Mod.Logger.LogInfo($"[DEBUGGING] Auto-loaded design. Centered bounds: X[{MapBoundsInfo.MinX},{MapBoundsInfo.MaxX}] Y[{MapBoundsInfo.MinY},{MapBoundsInfo.MaxY}]");
+           // Mod.Logger.LogInfo($"[DEBUGGING] Auto-loaded design. Centered bounds: X[{MapBoundsInfo.MinX},{MapBoundsInfo.MaxX}] Y[{MapBoundsInfo.MinY},{MapBoundsInfo.MaxY}]");
         }
+   
     }
+     
 }

@@ -1,7 +1,7 @@
 ﻿using KitchenMods;
 using Unity.Entities;
 
-namespace TestMod
+namespace PlateVsPlate
 {
     // marks items that have already been duplicated
     public struct StartingAlreadyDuplicatedForTeams : IComponentData, IModComponent { }

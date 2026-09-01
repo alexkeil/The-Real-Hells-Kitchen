@@ -3,7 +3,7 @@ using KitchenMods;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace TestMod.Team.TeamChecks
+namespace PlateVsPlate.Team.TeamChecks
 {
     public class BlockUnaffordableTeamPurchases : GenericSystemBase, IModSystem
     {
@@ -26,27 +26,20 @@ namespace TestMod.Team.TeamChecks
 
                 bool shouldBlock = false;
 
-                // Team ownership check — only relevant if this shop item is itself tagged
                 if (Require(e, out CTeamAssignment itemTeam) && itemTeam.Team != interactorTeam.Team)
-                {
                     shouldBlock = true;
-                }
 
-                // Affordability check
-                var teamData = TeamMoney.Get(interactorTeam.Team);
+                var teamData = TeamData.Get(interactorTeam.Team);
                 bool canAfford = teamData.Balance >= sale.Price;
                 if (!canAfford) shouldBlock = true;
 
                 bool isInactive = Has<CIsInactive>(e);
 
                 if (shouldBlock && !isInactive)
-                {
                     EntityManager.AddComponent<CIsInactive>(e);
-                }
                 else if (!shouldBlock && isInactive)
-                {
                     EntityManager.RemoveComponent<CIsInactive>(e);
-                }
+
             }
             entities.Dispose();
         }

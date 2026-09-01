@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
-namespace TestMod.Team
+namespace PlateVsPlate.Team
 {
     public class TeamWorldLabelSystem : GenericSystemBase, IModSystem
     {
@@ -12,6 +12,7 @@ namespace TestMod.Team
 
         protected override void OnUpdate()
         {
+
             if (!_created)
             {
                 var go = new GameObject("TestMod_TeamWorldLabels");
@@ -59,4 +60,5 @@ namespace TestMod.Team
             TeamWorldLabelBehaviour.Labels = newLabels;
         }
     }
+    
 }

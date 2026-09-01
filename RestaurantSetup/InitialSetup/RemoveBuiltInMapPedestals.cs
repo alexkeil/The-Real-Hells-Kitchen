@@ -2,14 +2,17 @@
 using KitchenMods;
 using Unity.Collections;
 
-namespace TestMod.RestaurantSetup.InitialSetup
+namespace PlateVsPlate.RestaurantSetup.InitialSetup
 {
+    
+    // i wanted to remove this destroy.. but for some reason it crashes when the map loads in?!
     public class RemoveBuiltInMapPedestals : GenericSystemBase, IModSystem
     {
         static readonly int[] BuiltInPedestalIDs = { 1823459359, -1114059052 }; //477050702 }; //  };
 
         protected override void OnUpdate()
         {
+            
             var query = GetEntityQuery(typeof(CAppliance));
             var entities = query.ToEntityArray(Allocator.Temp);
 
@@ -25,4 +28,6 @@ namespace TestMod.RestaurantSetup.InitialSetup
             entities.Dispose();
         }
     }
+    
+    
 }

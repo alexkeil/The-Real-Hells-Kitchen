@@ -1,23 +1,22 @@
 ﻿using Kitchen;
 using KitchenMods;
+using PlateVsPlate.Team;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.Debugging
+namespace PlateVsPlate.Debugging
 {
     public class TeamSelectionSystem : GenericSystemBase, IModSystem
     {
         protected override void OnUpdate()
         {
-
-
             if (!Input.GetKeyDown(KeyCode.E)) return;
 
             var playerQuery = GetEntityQuery(typeof(CPlayer), typeof(CPosition));
             var players = playerQuery.ToEntityArray(Allocator.Temp);
 
-            var markerQuery = GetEntityQuery(typeof(CTeamAssignment), typeof(CPosition));
+            var markerQuery = GetEntityQuery(typeof(CTeamSelector), typeof(CPosition));
             var markers = markerQuery.ToEntityArray(Allocator.Temp);
 
             foreach (var player in players)
@@ -26,44 +25,33 @@ namespace TestMod.Debugging
 
                 Entity closestMarker = Entity.Null;
                 float closestDistance = float.MaxValue;
-                CTeamAssignment closestTeam = default;
+                CTeamSelector closestMarkerData = default;
 
                 foreach (var marker in markers)
                 {
                     if (marker == player) continue;
                     if (!Require(marker, out CPosition markerPos)) continue;
-                    if (!Require(marker, out CTeamAssignment markerTeam)) continue;
+                    if (!Require(marker, out CTeamSelector markerData)) continue;
 
                     float distance = Vector3.Distance(playerPos.Position, markerPos.Position);
                     if (distance < 1.5f && distance < closestDistance)
                     {
                         closestDistance = distance;
                         closestMarker = marker;
-                        closestTeam = markerTeam;
+                        closestMarkerData = markerData;
                     }
                 }
 
-                if (closestMarker == Entity.Null)
-                {
-                    Mod.Logger.LogInfo("[DEBUGGING] E pressed, but not near anything");
-                    continue;
-                }
+                if (closestMarker == Entity.Null) continue;
 
-                if (Require(player, out CTeamAssignment currentTeam))
-                {
-                    EntityManager.SetComponentData(player, new CTeamAssignment { Team = closestTeam.Team });
-                    Mod.Logger.LogInfo($"[DEBUGGING] Player REASSIGNED from Team {currentTeam.Team} to Team {closestTeam.Team}.");
-                }
+                if (Has<CTeamAssignment>(player))
+                    EntityManager.SetComponentData(player, new CTeamAssignment { Team = closestMarkerData.Team });
                 else
-                {
-                    EntityManager.AddComponentData(player, new CTeamAssignment { Team = closestTeam.Team });
-                    Mod.Logger.LogInfo($"[DEBUGGING] Player ASSIGNED to Team {closestTeam.Team}.");
-                }
+                    EntityManager.AddComponentData(player, new CTeamAssignment { Team = closestMarkerData.Team });
             }
 
             players.Dispose();
             markers.Dispose();
-
         }
     }
 }

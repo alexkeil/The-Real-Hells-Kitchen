@@ -3,7 +3,7 @@ using KitchenMods;
 using System.Collections.Generic;
 using Unity.Entities;
 
-namespace TestMod.Team.TeamChecks
+namespace PlateVsPlate.Team.TeamChecks
 {
     public static class PendingPurchases
     {
@@ -29,9 +29,8 @@ namespace TestMod.Team.TeamChecks
                 {
                     int team = kvp.Value.team;
                     int price = kvp.Value.price;
-                    var teamData = TeamMoney.Get(team);
-                    teamData.Balance -= price;
-                    Mod.Logger.LogInfo($"[DEBUGGING] Team {team} spent {price} on timed purchase, new balance {teamData.Balance}");
+                    var teamData = TeamData.Get(team);
+                    teamData.SpendMoney(price);
                     toRemove.Add(kvp.Key);
                 }
             }

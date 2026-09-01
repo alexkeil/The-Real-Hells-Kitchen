@@ -2,7 +2,7 @@
 using KitchenMods;
 using Unity.Entities;
 
-namespace TestMod.RestaurantSetup.InitialSetup
+namespace PlateVsPlate.RestaurantSetup.InitialSetup
 {
     public class KeepMoneyHigh : GenericSystemBase, IModSystem
     {

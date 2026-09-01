@@ -1,22 +1,27 @@
 ﻿using Kitchen;
 using KitchenMods;
 using System.Collections.Generic;
+using PlateVsPlate.Team;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace TestMod.Team.TeamChecks
+namespace PlateVsPlate.Settings
 {
     public static class PvPStrikeData
     {
-        public static int Team0Strikes = 0;
-        public static int Team1Strikes = 0;
-
-        public static void Reset()
+        public static int Team0Strikes
         {
-            Team0Strikes = 0;
-            Team1Strikes = 0;
+            get => TeamData.Get(0).Strikes;
+            set => TeamData.Get(0).Strikes = value;
         }
+        public static int Team1Strikes
+        {
+            get => TeamData.Get(1).Strikes;
+            set => TeamData.Get(1).Strikes = value;
+        }
+
+        public static void Reset() => TeamData.ClearAll();
     }
 
     public static class PvPStrikeSettings
@@ -195,6 +200,9 @@ namespace TestMod.Team.TeamChecks
                 var em = World.DefaultGameObjectInjectionWorld.EntityManager;
                 var entity = em.CreateEntity(typeof(SGameOver), typeof(CGamePauseBlock));
                 em.SetComponentData(entity, new SGameOver { Reason = LossReason.Patience });
+
+                PvPStrikeData.Reset();
+                TeamData.ClearAll();
             }
         }
     }
@@ -253,6 +261,7 @@ namespace TestMod.Team.TeamChecks
         }
     }
 
+    /*
     public class StrikeDisplayBehaviour : MonoBehaviour
     {
         public static string Team0Text = "";
@@ -271,7 +280,9 @@ namespace TestMod.Team.TeamChecks
             GUI.Label(new Rect(20, 60, 300, 40), $"Team 1 Strikes: {Team1Text}", _style);
         }
     }
+    */
 
+    /*
     public class StrikeDisplaySystem : GenericSystemBase, IModSystem
     {
         private static bool _created = false;
@@ -293,4 +304,5 @@ namespace TestMod.Team.TeamChecks
                 + new string('_', Mathf.Max(0, PvPStrikeSettings.StrikesBeforeElimination - PvPStrikeData.Team1Strikes));
         }
     }
+    */
 }

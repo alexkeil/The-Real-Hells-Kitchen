@@ -1,12 +1,9 @@
 ﻿using HarmonyLib;
 using Kitchen;
 using System.Collections.Generic;
-using TestMod;
-using TestMod.Team;
 using Unity.Entities;
-using UnityEngine;
 
-namespace TestMod.Team.TeamChecks
+namespace PlateVsPlate.Team.TeamChecks
 {
     [HarmonyPatch(typeof(GrantMoneyForSatisfactions), "HandleSatisfiedOrder")]
     public static class InterceptSatisfiedOrderMoney
@@ -35,7 +32,6 @@ namespace TestMod.Team.TeamChecks
 
             Entity group = details.Group;
             Entity table = details.Source;
-            Mod.Logger.LogInfo($"[DEBUGGING][MONEY] Order completed — Source entity Index={table.Index}, Version={table.Version}");
 
             if (!em.Exists(table) || !em.HasComponent<CTeamAssignment>(table))
             {
@@ -49,24 +45,18 @@ namespace TestMod.Team.TeamChecks
             }
 
             int after = em.GetComponentData<CGroupReward>(group).Amount;
-            if (!_amountBeforeCall.TryGetValue(group, out int before))
-            {
-                return;
-            }
+            if (!_amountBeforeCall.TryGetValue(group, out int before))  return;
 
             int delta = after - before;
             var teamAssignment = em.GetComponentData<CTeamAssignment>(table);
             int team = teamAssignment.Team;
 
-            var teamData = TeamMoney.Get(team);
-            teamData.Balance += delta;
+            var teamData = TeamData.Get(team);
+            teamData.EarnMoney(delta);
 
             int dishIdentifier = details.CreditDish;
             if (dishIdentifier != 0)
-            {
                 teamData.RecordDish(dishIdentifier);
-                Mod.Logger.LogInfo($"[TestMod] Team {team} served dish {dishIdentifier} for ${delta}");
-            }
 
             _amountBeforeCall.Remove(group);
         }

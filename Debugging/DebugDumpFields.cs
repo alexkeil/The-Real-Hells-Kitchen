@@ -4,7 +4,7 @@ using KitchenMods;
 using System.Reflection;
 using UnityEngine;
 
-namespace TestMod.Team
+namespace PlateVsPlate.Debugging
 {
     public class DebugDumpFields : GenericSystemBase, IModSystem
     {
